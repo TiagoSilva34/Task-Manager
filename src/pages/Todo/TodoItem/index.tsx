@@ -3,7 +3,7 @@ import { InputContainer } from "../../../components/Input/styles";
 import { ITodoItemProps } from "./interface";
 import { Li } from "./styles";
 import { MdDelete } from "react-icons/md"
-export const TodoItemProps: React.FC<ITodoItemProps> = ({
+export const TodoItem: React.FC<ITodoItemProps> = ({
   todo
 }) => {
   return (
