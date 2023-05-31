@@ -36,9 +36,18 @@ const updateTodo = async(id: string | number, todo: ITodo): Promise<ITodo | Erro
   }
 }
 
+const setCompleteTodo = async(id: string | number, todo: ITodo): Promise<ITodo | Error> => {
+  try {
+    return await api.put(`${address.URL}/${id}`, todo)
+  } catch (error: any) {
+    throw new Error(error.message || "Todo not completed!")
+  }
+}
+
 export const TodoServices = {
   create,
   getAll,
   deleteTodo,
-  updateTodo
+  updateTodo,
+  setCompleteTodo
 }
