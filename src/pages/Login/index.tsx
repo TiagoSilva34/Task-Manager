@@ -16,6 +16,7 @@ import { FormContainer } from "../../components/Form/styles";
 import { LoginService } from "../../services/Login.service";
 
 import { createAuthProvider } from 'react-token-auth';
+import { toast, ToastContainer } from "react-toastify";
 
 type Session = { accessToken: string; refreshToken: string};
 
@@ -45,24 +46,33 @@ export const Login: React.FC<ILoginUserProps> = () => {
   }, [username, password])
 
   const signIn = () => {
-    LoginService.setSignIn({
-      username: username,
-      password: password
-    })
-    .then(response => {
-      return response
-    })
-    .then((session) => login(session))
-    
     if(username === "tiago@hotmail.com" && password === "123") {
       navigate('/todo-list')
+      setData('usernameLogged', username)
+    } else {
+      toast.success('Sorry! Incorrect e-mail or password', {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
 
-    setData('usernameLogged', username)
+    // LoginService.setSignIn({
+    //   username: username,
+    //   password: password
+    // })
+    // .then(response => {
+    //   return response
+    // })
+    // .then((session) => login(session))
+    
+    // if(username === "tiago@hotmail.com" && password === "123") {
+    //   navigate('/todo-list')
+    // }
+
   }
 
   return (
     <Container>
+      <ToastContainer />
       <Title className="font-weight-700">Sign in</Title>
       <FormContainer
         className="d-flex-column"
@@ -103,10 +113,10 @@ export const Login: React.FC<ILoginUserProps> = () => {
             <Text>Forgot your password?</Text>
           </Box>
           <Button
-            type="submit"
+            type="button"
             className="pb pt border-radius mt"
             onClick={signIn}
-            disabled={isValidCreds}
+            
           >
             log in
           </Button>

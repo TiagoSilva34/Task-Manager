@@ -12,7 +12,6 @@ export const Container = styled.div `
       color: #fff;
       background-color: #07bc0c;
       width: 200px;
-      margin-right: 175px;
     } 
 
     .info {
@@ -25,10 +24,19 @@ export const Container = styled.div `
       position: absolute;
       top: 194px;
       right: 25px;
+      cursor: pointer;
 
       path {
         color: #fff;
       }
+    }
+  }
+
+  @media (min-width: 900px) {
+    .visibilityIcon,
+    .visibilityIconOff {
+      right: 580px !important;
+      top: 204px !important;
     }
   }
 `

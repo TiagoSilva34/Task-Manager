@@ -6,8 +6,10 @@ import {
 } from "react-router-dom"
 import { Login } from "../pages/Login"
 import { Todo } from "../pages/Todo"
+import { useAuth } from "../auth";
 
 export const Routes: React.FC = () => {
+
   return (
     <BrowserRouter>
       <Switch>
