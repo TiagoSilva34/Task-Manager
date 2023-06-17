@@ -4,7 +4,9 @@ import { api } from "./base_url.service"
 
 const create = async(todo: ITodo): Promise<ITodo | Error> => {
   try {
-    return await api.post(address.URL, todo)
+    const { data } = await api.post(address.URL, todo)
+
+    return data
   } catch (error: any) {
     throw new Error(error.message || "Todo not created!")
   }

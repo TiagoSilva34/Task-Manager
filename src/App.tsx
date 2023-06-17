@@ -1,11 +1,15 @@
 import React from 'react';
-import { Todo } from './pages/Todo';
+import { Provider } from 'react-redux';
+import { Routes } from './routes/app.routes';
+import { store } from './store';
+import GlobalStyles from './styles/global.styles';
 
 function App() {
   return (
-    <div className="App">
-      <Todo />
-    </div>
+    <Provider store={store}>
+      <GlobalStyles />
+      <Routes />
+    </Provider>
   );
 }
 

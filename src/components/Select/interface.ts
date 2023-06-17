@@ -1,5 +1,6 @@
 export interface ISelectProps {
   onChange: (event: string) => void
+  id?: string
 }
 
 export enum Options {

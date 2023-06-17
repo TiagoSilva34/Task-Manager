@@ -4,4 +4,5 @@ export interface ITodo {
   priority: string 
   isCompleted: boolean
   createAt: string 
+  hour: string
 }
