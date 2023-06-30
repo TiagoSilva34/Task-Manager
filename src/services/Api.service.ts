@@ -1,7 +1,6 @@
 export const address = {
-  URL: "/todos"
-}
-
-export const loginAddress = {
-  URL: "/login"
+  TODOS: "/todos",
+  USERS: "/users",
+  LOGIN: "/auth/login",
+  ADD: "/todos/add"
 }

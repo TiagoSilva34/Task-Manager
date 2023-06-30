@@ -1,17 +1,20 @@
-import { ILogin } from "../models/ILogin"
-import { loginAddress } from "./Api.service"
+import { address } from "./Api.service"
 import { api } from "./base_url.service"
 
-const setSignIn = async(login: ILogin): Promise<any | Error> => {
+const loginRequest = async(username: string, password: string): Promise<any | Error> => {
   try {
-    const { data } = await api.post(loginAddress.URL, login)
+    const response = await api.post(address.LOGIN, {
+      headers: { 'Content-Type': 'application/json' },
+      username,
+      password
+    })
 
-    return data
+    return response.data
   } catch (error: any) {
     throw new Error(error.message || "Login failed!")
   }
 }
 
 export const LoginService = {
-  setSignIn
+  loginRequest
 }

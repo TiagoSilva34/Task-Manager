@@ -1,11 +1,10 @@
 import { useMemo, useState } from "react";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
-import { ILoginUserProps } from "./interface";
+import { IUser } from "../../models/IUser";
 import { useNavigate } from "react-router-dom"
 import { MdVisibility, MdVisibilityOff, MdPerson, MdPassword} from "react-icons/md"
-import { useDispatch } from "react-redux";
-import { setData } from "../../helper/localStorage";
+import { toast, ToastContainer } from "react-toastify";
 import {
   Box,
   Container,
@@ -13,61 +12,39 @@ import {
   Title
 } from "./styles"
 import { FormContainer } from "../../components/Form/styles";
-import { LoginService } from "../../services/Login.service";
+import { useAuth } from "../../context/auth/useAuth";
 
-import { createAuthProvider } from 'react-token-auth';
-import { toast, ToastContainer } from "react-toastify";
-
-type Session = { accessToken: string; refreshToken: string};
-
-export const { useAuth, authFetch, login, logout } = createAuthProvider<Session>({
-    getAccessToken: session => session.accessToken,
-    storage: localStorage,
-    onUpdateToken: token =>
-        fetch('/update-token', {
-            method: 'POST',
-            body: token.refreshToken,
-        }).then(r => r.json()),
-});
-
-export const Login: React.FC<ILoginUserProps> = () => {
-  const [username, setUsername] = useState<string>("")
+export const Login: React.FC<IUser> = () => {
+  const [email, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [showPassword, setShowPassword] = useState<boolean>(false)
   
+  const auth = useAuth()
   const navigate = useNavigate()
 
   const isValidCreds = useMemo(() => {
-    if (!username.length || !password.length) {
+    if (!email.length || !password.length) {
       return true
     } else {
       return false
     }
-  }, [username, password])
+  }, [email, password])
 
   const signIn = () => {
-    if(username === "tiago@hotmail.com" && password === "123") {
+    const creds = {
+      email: 'kminchelle',
+      password: '0lelplR'
+    }
+
+    try {
+      auth.authenticate(creds.email, creds.password)
       navigate('/todo-list')
-      setData('usernameLogged', username)
-    } else {
+
+    } catch (err) {
       toast.success('Sorry! Incorrect e-mail or password', {
         position: toast.POSITION.TOP_CENTER
       });
     }
-
-    // LoginService.setSignIn({
-    //   username: username,
-    //   password: password
-    // })
-    // .then(response => {
-    //   return response
-    // })
-    // .then((session) => login(session))
-    
-    // if(username === "tiago@hotmail.com" && password === "123") {
-    //   navigate('/todo-list')
-    // }
-
   }
 
   return (
@@ -81,7 +58,7 @@ export const Login: React.FC<ILoginUserProps> = () => {
             <Input 
               type="text"
               className="pt pb border-radius"            
-              value={username}
+              value={email}
               placeholder="Typing your username"
               onChange={setUsername}
             />
@@ -116,7 +93,7 @@ export const Login: React.FC<ILoginUserProps> = () => {
             type="button"
             className="pb pt border-radius mt"
             onClick={signIn}
-            
+            disabled={isValidCreds}
           >
             log in
           </Button>
